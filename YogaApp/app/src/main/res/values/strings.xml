@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">YogaApp</string>
+    <string name="no_description">No Description</string>
+
+    <!-- Days of the Week -->
+    <string-array name="days_of_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <!-- Types of Yoga Classes -->
+    <string-array name="types_of_class">
+        <item>Flow Yoga</item>
+        <item>Aerial Yoga</item>
+        <item>Family Yoga</item>
+    </string-array>
+</resources>

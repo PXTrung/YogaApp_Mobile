@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+
+    <!-- Task Details: Name and Deadline -->
+    <LinearLayout
+        android:id="@+id/TaskContentLayout"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp">
+
+        <!-- Task Name -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- Task Deadline -->
+            <TextView
+                android:id="@+id/courseName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Course Name"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/courseType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Course Type"
+                android:textColor="#00BCD4"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/courseDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="day" />
+
+            <TextView
+                android:id="@+id/courseTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Time"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/courseDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Duration"
+                android:textAlignment="textEnd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/courseDescription"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Details" />
+
+            <TextView
+                android:id="@+id/coursePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Price"
+                android:textAlignment="textEnd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonDeleteCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0"
+                android:backgroundTint="#FB0000"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:text="Delete"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonEditCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="0"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:text="Edit" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
