@@ -20,27 +20,27 @@ public class ClassAdapter extends ArrayAdapter<Class> {
     private Context context;
     private List<Class> classList;
 
-    public ClassAdapter(Context context, List<Class> classList) {
-        super(context, 0, classList);
-        this.context = context;
+    public ClassAdapter(Context ctx, List<Class> classList) {
+        super(ctx, 0, classList);
+        this.context = ctx;
         this.classList = classList;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.class_item, parent, false);
+    public View getView(int pos, View convertedView, ViewGroup parentView) {
+        if (convertedView == null) {
+            convertedView = LayoutInflater.from(context).inflate(R.layout.class_item, parentView, false);
         }
 
         // Get the current class schedule
-        Class classSchedule = classList.get(position);
+        Class classSchedule = classList.get(pos);
 
         // Find views in class_item.xml
-        TextView classDate = convertView.findViewById(R.id.classDate);
-        TextView classTeacher = convertView.findViewById(R.id.classTeacher);
-        TextView classComments = convertView.findViewById(R.id.classComments);
-        Button deleteButton = convertView.findViewById(R.id.buttonDeleteClass);
-        Button editButton = convertView.findViewById(R.id.buttonEditClass);
+        TextView classDate = convertedView.findViewById(R.id.classDate);
+        TextView classTeacher = convertedView.findViewById(R.id.classTeacher);
+        TextView classComments = convertedView.findViewById(R.id.classComments);
+        Button deleteButton = convertedView.findViewById(R.id.buttonDeleteClass);
+        Button editButton = convertedView.findViewById(R.id.buttonEditClass);
 
         // Set data
         classDate.setText(String.format("Date: %s",classSchedule.getDate()));
@@ -69,7 +69,7 @@ public class ClassAdapter extends ArrayAdapter<Class> {
             });
         }
 
-        return convertView;
+        return convertedView;
     }
 
     // Method to update the class list

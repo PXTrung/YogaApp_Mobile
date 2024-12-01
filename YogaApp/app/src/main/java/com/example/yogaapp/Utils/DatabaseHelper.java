@@ -1,7 +1,5 @@
 package com.example.yogaapp.Utils;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.yogaapp.Entities.Course;
 import com.example.yogaapp.Entities.Class;
@@ -24,57 +21,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "yogaApp.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_COURSES = "Courses";
+    private static final String DBNAME = "yogaApp.db";
+    private static final int DBVERSION = 1;
+    private static final String TABLECOURSES = "Courses";
     private Context context;
 
-    private static final String COLUMN_ID = "id";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_DAY_OF_WEEK = "dayOfWeek";
-    private static final String COLUMN_TIME = "time";
-    private static final String COLUMN_CAPACITY = "capacity";
-    private static final String COLUMN_DURATION = "duration";
-    private static final String COLUMN_PRICE = "price";
-    private static final String COLUMN_TYPE_OF_CLASS = "typeOfClass";
-    private static final String COLUMN_DESCRIPTION = "description";
+    private static final String CO_COURSEID = "id";
+    private static final String CO_COURSENAME = "name";
+    private static final String CO_COURSEDAYOFWEEK = "dayOfWeek";
+    private static final String CO_COURSETIME = "time";
+    private static final String CO_COURSECAPACITY = "capacity";
+    private static final String CO_COURSEDURATION = "duration";
+    private static final String CO_COURSEPRICE = "price";
+    private static final String CO_COURSETYPEOFCLASS = "typeOfClass";
+    private static final String CO_COURSEDESCRIPTION = "description";
 
 
     // Table name and column names for class schedule
-    private static final String TABLE_CLASSES = "classes";
-    private static final String COLUMN_CLASS_ID = "id";
-    private static final String COLUMN_CLASS_DATE = "date";
-    private static final String COLUMN_CLASS_COURSE_ID = "course_id"; // Foreign key to Course
-    private static final String COLUMN_CLASS_TEACHER = "teacher";
-    private static final String COLUMN_CLASS_COMMENTS = "comments";
+    private static final String TABLECLASSES = "classes";
+    private static final String CO_CLASSID = "id";
+    private static final String CO_CLASSDATE = "date";
+    private static final String CO_CLASSCOURSEID = "course_id";
+    private static final String CO_CLASSTEACHER = "teacher";
+    private static final String CO_CLASSCOMMENTS = "comments";
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DBNAME, null, DBVERSION);
         this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableCourses = "CREATE TABLE " + TABLE_COURSES + " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME + " TEXT NOT NULL, " +
-                COLUMN_DAY_OF_WEEK + " TEXT NOT NULL, " +
-                COLUMN_TIME + " TEXT NOT NULL, " +
-                COLUMN_CAPACITY + " INTEGER NOT NULL, " +
-                COLUMN_DURATION + " INTEGER NOT NULL, " +
-                COLUMN_PRICE + " REAL NOT NULL, " +
-                COLUMN_TYPE_OF_CLASS + " TEXT NOT NULL, " +
-                COLUMN_DESCRIPTION + " TEXT)";
+        String createTableCourses = "CREATE TABLE " + TABLECOURSES + " (" +
+                CO_COURSEID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CO_COURSENAME + " TEXT NOT NULL, " +
+                CO_COURSEDAYOFWEEK + " TEXT NOT NULL, " +
+                CO_COURSETIME + " TEXT NOT NULL, " +
+                CO_COURSECAPACITY + " INTEGER NOT NULL, " +
+                CO_COURSEDURATION + " INTEGER NOT NULL, " +
+                CO_COURSEPRICE + " REAL NOT NULL, " +
+                CO_COURSETYPEOFCLASS + " TEXT NOT NULL, " +
+                CO_COURSEDESCRIPTION + " TEXT)";
         db.execSQL(createTableCourses);
 
         // Classes table creation
-        String CREATE_CLASSES_TABLE = "CREATE TABLE " + TABLE_CLASSES + "("
-                + COLUMN_CLASS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_CLASS_DATE + " TEXT,"
-                + COLUMN_CLASS_COURSE_ID + " INTEGER,"
-                + COLUMN_CLASS_TEACHER + " TEXT NOT NULL,"
-                + COLUMN_CLASS_COMMENTS + " TEXT,"
-                + "FOREIGN KEY(" + COLUMN_CLASS_COURSE_ID + ") REFERENCES " + TABLE_COURSES + "(id)"
+        String CREATE_CLASSES_TABLE = "CREATE TABLE " + TABLECLASSES + "("
+                + CO_CLASSID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + CO_CLASSDATE  + " TEXT,"
+                + CO_CLASSCOURSEID + " INTEGER,"
+                + CO_CLASSTEACHER + " TEXT NOT NULL,"
+                + CO_CLASSCOMMENTS + " TEXT,"
+                + "FOREIGN KEY(" + CO_CLASSCOURSEID + ") REFERENCES " + TABLECOURSES + "(id)"
                 + ")";
         db.execSQL(CREATE_CLASSES_TABLE);
     }
@@ -86,21 +83,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Insert a new course
     public void addCourse(Course course) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, course.getName());
-        values.put(COLUMN_DAY_OF_WEEK, course.getDayOfWeek());
-        values.put(COLUMN_TIME, course.getTime());
-        values.put(COLUMN_CAPACITY, course.getCapacity());
-        values.put(COLUMN_DURATION, course.getDuration());
-        values.put(COLUMN_PRICE, course.getPrice());
-        values.put(COLUMN_TYPE_OF_CLASS, course.getTypeOfClass());
-        values.put(COLUMN_DESCRIPTION, course.getDescription());
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        ContentValues conValues = new ContentValues();
+        conValues.put(CO_COURSENAME, course.getName());
+        conValues.put(CO_COURSEDAYOFWEEK, course.getDayOfWeek());
+        conValues.put(CO_COURSETIME, course.getTime());
+        conValues.put(CO_COURSECAPACITY, course.getCapacity());
+        conValues.put(CO_COURSEDURATION, course.getDuration());
+        conValues.put(CO_COURSEPRICE, course.getPrice());
+        conValues.put(CO_COURSETYPEOFCLASS, course.getTypeOfClass());
+        conValues.put(CO_COURSEDESCRIPTION, course.getDescription());
 
         // Insert in SQLite and retrieve the inserted row ID
-        long id = db.insert(TABLE_COURSES, null, values);
+        long id = sqlDb.insert(TABLECOURSES, null, conValues);
         course.setId((int) id); // Set the course ID for Firebase
-        db.close();
+        sqlDb.close();
 
         // Insert into Firebase Realtime Database
         // Only sync if SQLite insertion was successful
@@ -113,19 +110,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Update a course
     public void updateCourse(Course course) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DAY_OF_WEEK, course.getDayOfWeek());
-        values.put(COLUMN_NAME, course.getName());
-        values.put(COLUMN_TIME, course.getTime());
-        values.put(COLUMN_CAPACITY, course.getCapacity());
-        values.put(COLUMN_DURATION, course.getDuration());
-        values.put(COLUMN_PRICE, course.getPrice());
-        values.put(COLUMN_TYPE_OF_CLASS, course.getTypeOfClass());
-        values.put(COLUMN_DESCRIPTION, course.getDescription());
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        ContentValues conValues = new ContentValues();
+        conValues.put(CO_COURSEDAYOFWEEK, course.getDayOfWeek());
+        conValues.put(CO_COURSENAME, course.getName());
+        conValues.put(CO_COURSETIME, course.getTime());
+        conValues.put(CO_COURSECAPACITY, course.getCapacity());
+        conValues.put(CO_COURSEDURATION, course.getDuration());
+        conValues.put(CO_COURSEPRICE, course.getPrice());
+        conValues.put(CO_COURSETYPEOFCLASS, course.getTypeOfClass());
+        conValues.put(CO_COURSEDESCRIPTION, course.getDescription());
 
-        int rowsAfftected = db.update(TABLE_COURSES, values, COLUMN_ID + " = ?", new String[]{String.valueOf(course.getId())});
-        db.close();
+        int rowsAfftected = sqlDb.update(TABLECOURSES, conValues, CO_COURSEID + " = ?", new String[]{String.valueOf(course.getId())});
+        sqlDb.close();
 
         // Update in Firebase Realtime Database if update in SQLite was successful
         if (rowsAfftected > 0){
@@ -137,12 +134,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Delete a course
     public void deleteCourse(int courseId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int rowsDeleted = db.delete(TABLE_COURSES, COLUMN_ID + " = ?", new String[]{String.valueOf(courseId)});
-        db.close();
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        int deletedRowCourse = sqlDb.delete(TABLECOURSES, CO_COURSEID + " = ?", new String[]{String.valueOf(courseId)});
+        sqlDb.close();
 
         // Delete from Firebase Realtime Database if delete from SQLite was successful
-        if (rowsDeleted > 0) {
+        if (deletedRowCourse > 0) {
             DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference("courses");
             firebaseRef.child(String.valueOf(courseId)).removeValue();
         }
@@ -152,36 +149,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Retrieve all courses
     public List<Course> getAllCourses() {
         List<Course> courses = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COURSES, null);
+        SQLiteDatabase sqlDb = this.getReadableDatabase();
+        Cursor cur = sqlDb.rawQuery("SELECT * FROM " + TABLECOURSES, null);
 
-        if (cursor.moveToFirst()) {
+        if (cur.moveToFirst()) {
             do {
                 Course course = new Course(
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY_OF_WEEK)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CAPACITY)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DURATION)),
-                        cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_PRICE)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE_OF_CLASS)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION))
+                        cur.getInt(cur.getColumnIndexOrThrow(CO_COURSEID)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_COURSENAME)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_COURSEDAYOFWEEK)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_COURSETIME)),
+                        cur.getInt(cur.getColumnIndexOrThrow(CO_COURSECAPACITY)),
+                        cur.getInt(cur.getColumnIndexOrThrow(CO_COURSEDURATION)),
+                        cur.getDouble(cur.getColumnIndexOrThrow(CO_COURSEPRICE)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_COURSETYPEOFCLASS)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_COURSEDESCRIPTION))
                 );
                 courses.add(course);
-            } while (cursor.moveToNext());
+            } while (cur.moveToNext());
         }
-        cursor.close();
-        db.close();
+        cur.close();
+        sqlDb.close();
         return courses;
     }
 
     public Course getCourseById(int courseId) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase sqlDb = this.getReadableDatabase();
         Course course = null;
 
-        Cursor cursor = db.query(
-                TABLE_COURSES,
+        Cursor cur = sqlDb.query(
+                TABLECOURSES,
                 new String[]{"id", "name", "dayOfWeek", "time", "capacity", "duration", "price", "typeOfClass", "description"},
                 "id = ?",
                 new String[]{String.valueOf(courseId)},
@@ -190,24 +187,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null
         );
 
-        if (cursor != null && cursor.moveToFirst()) {
-            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-            String dayOfWeek = cursor.getString(cursor.getColumnIndexOrThrow("dayOfWeek"));
-            String time = cursor.getString(cursor.getColumnIndexOrThrow("time"));
-            int capacity = cursor.getInt(cursor.getColumnIndexOrThrow("capacity"));
-            int duration = cursor.getInt(cursor.getColumnIndexOrThrow("duration"));
-            double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
-            String typeOfClass = cursor.getString(cursor.getColumnIndexOrThrow("typeOfClass"));
-            String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+        if (cur != null && cur.moveToFirst()) {
+            String name = cur.getString(cur.getColumnIndexOrThrow("name"));
+            String dayOfWeek = cur.getString(cur.getColumnIndexOrThrow("dayOfWeek"));
+            String time = cur.getString(cur.getColumnIndexOrThrow("time"));
+            int capacity = cur.getInt(cur.getColumnIndexOrThrow("capacity"));
+            int duration = cur.getInt(cur.getColumnIndexOrThrow("duration"));
+            double price = cur.getDouble(cur.getColumnIndexOrThrow("price"));
+            String typeOfClass = cur.getString(cur.getColumnIndexOrThrow("typeOfClass"));
+            String description = cur.getString(cur.getColumnIndexOrThrow("description"));
 
             // Initialize the course object with retrieved data
             course = new Course(courseId, name, dayOfWeek, time, capacity, duration, price, typeOfClass, description);
         }
 
-        if (cursor != null) {
-            cursor.close();
+        if (cur != null) {
+            cur.close();
         }
-        db.close();
+        sqlDb.close();
 
         return course;
     }
@@ -215,15 +212,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // ===================================================== Class ===================================================
     public void addClass(Class classSchedule) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CLASS_DATE, classSchedule.getDate());
-        values.put(COLUMN_CLASS_COURSE_ID, classSchedule.getCourseId());
-        values.put(COLUMN_CLASS_TEACHER, classSchedule.getTeacher());
-        values.put(COLUMN_CLASS_COMMENTS, classSchedule.getComments());
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        ContentValues conValues = new ContentValues();
+        conValues.put(CO_CLASSDATE , classSchedule.getDate());
+        conValues.put(CO_CLASSCOURSEID, classSchedule.getCourseId());
+        conValues.put(CO_CLASSTEACHER, classSchedule.getTeacher());
+        conValues.put(CO_CLASSCOMMENTS, classSchedule.getComments());
 
-        long classId = db.insert(TABLE_CLASSES, null, values); // Insert into SQLite
-        db.close();
+        long classId = sqlDb.insert(TABLECLASSES, null, conValues); // Insert into SQLite
+        sqlDb.close();
 
         // Insert into Firebase Realtime Database
         // Only sync if SQLite insertion was successful
@@ -235,68 +232,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void deleteClass(int classId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int rowsDeleted = db.delete(TABLE_CLASSES, "id = ?", new String[]{String.valueOf(classId)});
-        db.close();
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        int deletedRowsClass = sqlDb.delete(TABLECLASSES, "id = ?", new String[]{String.valueOf(classId)});
+        sqlDb.close();
 
         // Delete from Firebase Realtime Database if delete from SQLite was successful
-        if (rowsDeleted > 0) {
+        if (deletedRowsClass > 0) {
             DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("classes");
             firebaseDatabase.child(String.valueOf(classId)).removeValue();
         }
     }
 
     public List<Class> getAllClasses() {
-        List<Class> classes = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CLASSES, null);
+        List<Class> yogaClasses = new ArrayList<>();
+        SQLiteDatabase sqlDb = this.getReadableDatabase();
+        Cursor cur = sqlDb.rawQuery("SELECT * FROM " + TABLECLASSES, null);
 
-        if (cursor.moveToFirst()) {
+        if (cur.moveToFirst()) {
             do {
                 Class classSchedule = new Class();
-                classSchedule.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
-                classSchedule.setDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_DATE)));
-                classSchedule.setCourseId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CLASS_COURSE_ID)));
-                classSchedule.setTeacher(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_TEACHER)));
-                classSchedule.setComments(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_COMMENTS)));
-                classes.add(classSchedule);
-            } while (cursor.moveToNext());
+                classSchedule.setId(cur.getInt(cur.getColumnIndexOrThrow(CO_CLASSID)));
+                classSchedule.setDate(cur.getString(cur.getColumnIndexOrThrow(CO_CLASSDATE )));
+                classSchedule.setCourseId(cur.getInt(cur.getColumnIndexOrThrow(CO_CLASSCOURSEID)));
+                classSchedule.setTeacher(cur.getString(cur.getColumnIndexOrThrow(CO_CLASSTEACHER)));
+                classSchedule.setComments(cur.getString(cur.getColumnIndexOrThrow(CO_CLASSCOMMENTS)));
+                yogaClasses.add(classSchedule);
+            } while (cur.moveToNext());
         }
-        cursor.close();
-        db.close();
-        return classes;
+        cur.close();
+        sqlDb.close();
+        return yogaClasses;
     }
 
     public Class getClassById(int classId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_CLASSES, null, "id = ?", new String[]{String.valueOf(classId)}, null, null, null);
+        SQLiteDatabase sqlDb = this.getReadableDatabase();
+        Cursor cur = sqlDb.query(TABLECLASSES, null, "id = ?", new String[]{String.valueOf(classId)}, null, null, null);
 
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cur != null) {
+            cur.moveToFirst();
             Class classSchedule = new Class(
-                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CLASS_ID)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_DATE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CLASS_COURSE_ID)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_TEACHER)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_COMMENTS))
+                    cur.getInt(cur.getColumnIndexOrThrow(CO_CLASSID)),
+                    cur.getString(cur.getColumnIndexOrThrow(CO_CLASSDATE )),
+                    cur.getInt(cur.getColumnIndexOrThrow(CO_CLASSCOURSEID)),
+                    cur.getString(cur.getColumnIndexOrThrow(CO_CLASSTEACHER)),
+                    cur.getString(cur.getColumnIndexOrThrow(CO_CLASSCOMMENTS))
             );
-            cursor.close();
+            cur.close();
             return classSchedule;
         }
         return null;
     }
 
     public void updateClass(Class classSchedule) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CLASS_DATE, classSchedule.getDate());
-        values.put(COLUMN_CLASS_COURSE_ID, classSchedule.getCourseId());
-        values.put(COLUMN_CLASS_TEACHER, classSchedule.getTeacher());
-        values.put(COLUMN_CLASS_COMMENTS, classSchedule.getComments());
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        ContentValues conValues = new ContentValues();
+        conValues.put(CO_CLASSDATE , classSchedule.getDate());
+        conValues.put(CO_CLASSCOURSEID, classSchedule.getCourseId());
+        conValues.put(CO_CLASSTEACHER, classSchedule.getTeacher());
+        conValues.put(CO_CLASSCOMMENTS, classSchedule.getComments());
 
 
-        int rowsAffected = db.update(TABLE_CLASSES, values, "id = ?", new String[]{String.valueOf(classSchedule.getId())});
-        db.close();
+        int rowsAffected = sqlDb.update(TABLECLASSES, conValues, "id = ?", new String[]{String.valueOf(classSchedule.getId())});
+        sqlDb.close();
 
         // Update in Firebase Realtime Database if update in SQLite was successful
         if (rowsAffected > 0) {
@@ -307,38 +304,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Class> getClassesByCourseId(int courseId) {
         List<Class> classSchedules = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase sqlDb = this.getReadableDatabase();
 
-        Cursor cursor = db.query(
-                TABLE_CLASSES,
-                new String[]{COLUMN_CLASS_ID, COLUMN_CLASS_DATE, COLUMN_CLASS_COURSE_ID, COLUMN_CLASS_TEACHER, COLUMN_CLASS_COMMENTS},
-                COLUMN_CLASS_COURSE_ID + "=?",
+        Cursor cur = sqlDb.query(
+                TABLECLASSES,
+                new String[]{CO_CLASSID, CO_CLASSDATE , CO_CLASSCOURSEID, CO_CLASSTEACHER, CO_CLASSCOMMENTS},
+                CO_CLASSCOURSEID + "=?",
                 new String[]{String.valueOf(courseId)},
                 null,
                 null,
-                COLUMN_CLASS_DATE + " ASC"
+                CO_CLASSDATE  + " ASC"
         );
 
-        if (cursor.moveToFirst()) {
+        if (cur.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CLASS_ID));
-                String date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_DATE));
-                String teacher = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_TEACHER));
-                String comments = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_COMMENTS));
+                int tempId = cur.getInt(cur.getColumnIndexOrThrow(CO_CLASSID));
+                String tempDate = cur.getString(cur.getColumnIndexOrThrow(CO_CLASSDATE ));
+                String tempTeacher = cur.getString(cur.getColumnIndexOrThrow(CO_CLASSTEACHER));
+                String tempComments = cur.getString(cur.getColumnIndexOrThrow(CO_CLASSCOMMENTS));
 
-                classSchedules.add(new Class(id, date, courseId, teacher, comments));
-            } while (cursor.moveToNext());
+                classSchedules.add(new Class(tempId, tempDate, courseId, tempTeacher, tempComments));
+            } while (cur.moveToNext());
         }
 
-        cursor.close();
-        db.close();
+        cur.close();
+        sqlDb.close();
 
         return classSchedules;
     }
 
     public List<Class> searchClasses(String searchText) {
         List<Class> classList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase sqlDb = this.getReadableDatabase();
 
 
         String selection = "teacher LIKE ? OR date LIKE ?";
@@ -347,8 +344,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "%" + searchText + "%"  // For partial matching in date
         };
 
-        Cursor cursor = db.query(
-                TABLE_CLASSES,
+        Cursor cur = sqlDb.query(
+                TABLECLASSES,
                 null,
                 selection,
                 selectionArgs,
@@ -357,21 +354,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null
         );
 
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
+        if (cur != null) {
+            while (cur.moveToNext()) {
                 Class classSchedule = new Class(
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CLASS_ID)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_DATE)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CLASS_COURSE_ID)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_TEACHER)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS_COMMENTS))
+                        cur.getInt(cur.getColumnIndexOrThrow(CO_CLASSID)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_CLASSDATE )),
+                        cur.getInt(cur.getColumnIndexOrThrow(CO_CLASSCOURSEID)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_CLASSTEACHER)),
+                        cur.getString(cur.getColumnIndexOrThrow(CO_CLASSCOMMENTS))
 
                 );
                 classList.add(classSchedule);
             }
-            cursor.close();
+            cur.close();
         }
-        db.close();
+        sqlDb.close();
         return classList;
     }
 
@@ -380,9 +377,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Check for internet connection
     public boolean isConnectedToInternet() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnected();
+        ConnectivityManager connectManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeInternet = connectManager.getActiveNetworkInfo();
+        return activeInternet != null && activeInternet.isConnected();
     }
 
     // Sync data if online
@@ -409,8 +406,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                Log.e("FirebaseSync", "Database error: " + error.getMessage());
+            public void onCancelled(DatabaseError err) {
+                Log.e("FirebaseSync", "Database error: " + err.getMessage());
             }
         });
     }

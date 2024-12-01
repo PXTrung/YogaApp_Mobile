@@ -19,36 +19,36 @@ import com.example.yogaapp.R;
 import java.util.List;
 
 public class CourseAdapter extends ArrayAdapter<Course> {
-    private final List<Course> courses;
+    private final List<Course> yogaCoursesList;
     private final LayoutInflater inflater;
 
-    public CourseAdapter(Context context, List<Course> courses) {
-        super(context, 0, courses);
-        this.courses = courses;
-        this.inflater = LayoutInflater.from(context);
+    public CourseAdapter(Context ctx, List<Course> yogaCourses) {
+        super(ctx, 0, yogaCourses);
+        this.yogaCoursesList = yogaCourses;
+        this.inflater = LayoutInflater.from(ctx);
     }
 
     @SuppressLint("DefaultLocale")
     @NonNull
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.course_item, parent, false);
+    public View getView(int pos, View convertedView, @NonNull ViewGroup parentView) {
+        if (convertedView == null) {
+            convertedView = inflater.inflate(R.layout.course_item, parentView, false);
         }
 
-        Course course = courses.get(position);
+        Course course = yogaCoursesList.get(pos);
 
-        LinearLayout courseContainer = convertView.findViewById(R.id.TaskContentLayout);
+        LinearLayout courseContainer = convertedView.findViewById(R.id.TaskContentLayout);
 
-        TextView courseName = convertView.findViewById(R.id.courseName);
-        TextView courseType = convertView.findViewById(R.id.courseType);
-        TextView courseDay = convertView.findViewById(R.id.courseDay);
-        TextView courseTime = convertView.findViewById(R.id.courseTime);
-        TextView courseDuration = convertView.findViewById(R.id.courseDuration);
-        TextView courseDescription = convertView.findViewById(R.id.courseDescription);
-        TextView coursePrice = convertView.findViewById(R.id.coursePrice);
-        Button deleteButton = convertView.findViewById(R.id.buttonDeleteCourse);
-        Button editButton = convertView.findViewById(R.id.buttonEditCourse);
+        TextView courseName = convertedView.findViewById(R.id.courseName);
+        TextView courseType = convertedView.findViewById(R.id.courseType);
+        TextView courseDay = convertedView.findViewById(R.id.courseDay);
+        TextView courseTime = convertedView.findViewById(R.id.courseTime);
+        TextView courseDuration = convertedView.findViewById(R.id.courseDuration);
+        TextView courseDescription = convertedView.findViewById(R.id.courseDescription);
+        TextView coursePrice = convertedView.findViewById(R.id.coursePrice);
+        Button deleteButton = convertedView.findViewById(R.id.buttonDeleteCourse);
+        Button editButton = convertedView.findViewById(R.id.buttonEditCourse);
 
         courseName.setText(course.getName());
         courseType.setText(course.getTypeOfClass());
@@ -77,6 +77,6 @@ public class CourseAdapter extends ArrayAdapter<Course> {
             ((CoursesActivity) getContext()).onUpdateCourse(course);
         });
 
-        return convertView;
+        return convertedView;
     }
 }

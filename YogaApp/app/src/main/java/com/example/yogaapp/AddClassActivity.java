@@ -99,7 +99,7 @@ public class AddClassActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog() {
-        Calendar calendar = Calendar.getInstance();
+        Calendar classCalendar = Calendar.getInstance();
         Course course = getSelectedCourse();
 
         // Get the required day of the week for the course
@@ -107,15 +107,15 @@ public class AddClassActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
 
-            calendar.set(year, month, dayOfMonth);
+            classCalendar.set(year, month, dayOfMonth);
             // Check if the selected day matches the course day
-            if (calendar.get(Calendar.DAY_OF_WEEK) != requiredDayOfWeek) {
+            if (classCalendar.get(Calendar.DAY_OF_WEEK) != requiredDayOfWeek) {
                 // Show a message to the user if the selected day is incorrect
                 Toast.makeText(this, "Please select a " + course.getDayOfWeek(), Toast.LENGTH_SHORT).show();
             } else {
                 // If the date is valid, update the selected date
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                selectedDate = format.format(calendar.getTime());
+                selectedDate = format.format(classCalendar.getTime());
                 textViewPickDate.setText(selectedDate);
             }
         }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
